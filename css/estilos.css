@@ -1,0 +1,204 @@
+/* ===== Variables de diseño ===== */
+:root {
+  --azul: #0b3d6e;
+  --azul-claro: #e8f0f8;
+  --dorado: #c9a227;
+  --texto: #1d2733;
+  --texto-suave: #5a6675;
+  --borde: #c8d1dc;
+  --fondo: #f3f5f8;
+  --blanco: #ffffff;
+  --verde: #1e7b45;
+  --verde-claro: #e5f4ea;
+  --rojo: #b42318;
+  --rojo-claro: #fdecea;
+  --ambar: #8a5a00;
+  --ambar-claro: #fff4d6;
+  --radio: 10px;
+  --sombra: 0 2px 10px rgba(11, 61, 110, 0.08);
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--texto);
+  background: var(--fondo);
+}
+
+/* ===== Cabecera ===== */
+.cabecera {
+  background: var(--azul);
+  color: var(--blanco);
+  text-align: center;
+  padding: 2rem 1rem 1.75rem;
+  border-bottom: 4px solid var(--dorado);
+}
+.cabecera h1 { margin: 0.25rem 0; font-size: clamp(1.5rem, 5vw, 2.1rem); }
+.cabecera__institucion,
+.cabecera__curso { margin: 0; opacity: 0.9; font-size: 0.95rem; }
+
+/* ===== Contenedor ===== */
+.contenedor {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 2rem;
+}
+
+/* ===== Estado del registro ===== */
+.estado {
+  border-radius: var(--radio);
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1.25rem;
+  border-left: 5px solid;
+}
+.estado p { margin: 0; font-weight: 600; }
+.estado .estado__detalle { font-weight: 400; font-size: 0.92rem; margin-top: 0.2rem; }
+.estado--cargando { background: var(--azul-claro); border-color: var(--azul); }
+.estado--abierto  { background: var(--verde-claro); border-color: var(--verde); color: var(--verde); }
+.estado--pronto   { background: var(--ambar-claro); border-color: var(--ambar); color: var(--ambar); }
+.estado--cerrado  { background: var(--rojo-claro); border-color: var(--rojo); color: var(--rojo); }
+
+/* ===== Formulario ===== */
+.formulario {
+  background: var(--blanco);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 1.5rem 1.25rem;
+}
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.25rem 1rem;
+  min-width: 0;
+}
+fieldset:disabled { opacity: 0.6; }
+.formulario__titulo { font-size: 1.2rem; font-weight: 700; color: var(--azul); padding: 0; }
+.formulario__nota { grid-column: 1 / -1; margin: 0 0 0.75rem; color: var(--texto-suave); font-size: 0.9rem; }
+
+.campo { display: flex; flex-direction: column; min-width: 0; }
+.campo--ancho { grid-column: 1 / -1; }
+
+label { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.3rem; }
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+select {
+  width: 100%;
+  font: inherit;
+  padding: 0.65rem 0.75rem;
+  border: 1.5px solid var(--borde);
+  border-radius: 8px;
+  background: var(--blanco);
+  color: var(--texto);
+  min-height: 46px;
+}
+input:focus, select:focus {
+  outline: 3px solid rgba(11, 61, 110, 0.25);
+  border-color: var(--azul);
+}
+#area-otro { margin-top: 0.5rem; }
+
+.campo--invalido input,
+.campo--invalido select { border-color: var(--rojo); }
+.campo__error { color: var(--rojo); font-size: 0.85rem; min-height: 1.3em; margin: 0.2rem 0 0.4rem; }
+
+.campo--check { flex-direction: row; flex-wrap: wrap; align-items: flex-start; gap: 0.6rem; margin-top: 0.5rem; }
+.campo--check input { width: 22px; height: 22px; margin: 0.15rem 0 0; flex-shrink: 0; }
+.campo--check label { flex: 1; font-weight: 400; font-size: 0.9rem; }
+.campo--check .campo__error { flex-basis: 100%; }
+
+/* Campo trampa oculto para robots */
+.trampa { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* ===== Botones ===== */
+.boton {
+  grid-column: 1 / -1;
+  margin-top: 0.5rem;
+  font: inherit;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--blanco);
+  background: var(--azul);
+  border: 0;
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  min-height: 50px;
+  cursor: pointer;
+}
+.boton:hover:not(:disabled) { background: #082d52; }
+.boton:disabled { cursor: not-allowed; }
+.boton--secundario { background: var(--blanco); color: var(--azul); border: 2px solid var(--azul); }
+.boton--secundario:hover:not(:disabled) { background: var(--azul-claro); }
+
+.mensaje { grid-column: 1 / -1; margin: 0.75rem 0 0; font-weight: 600; text-align: center; }
+.mensaje--error { color: var(--rojo); }
+
+/* ===== Confirmación ===== */
+.exito {
+  background: var(--blanco);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 2rem 1.25rem;
+  text-align: center;
+  border-top: 5px solid var(--verde);
+}
+.exito h2 { color: var(--verde); margin-top: 0; }
+.exito strong { font-size: 1.3rem; color: var(--azul); }
+.exito__detalle { color: var(--texto-suave); font-size: 0.92rem; }
+.exito .boton { width: 100%; max-width: 320px; }
+
+/* ===== Pie ===== */
+.pie { text-align: center; color: var(--texto-suave); font-size: 0.85rem; padding: 1rem; }
+
+/* ===== Grupo "Lugar de nacimiento" ===== */
+fieldset.grupo {
+  display: block;
+  border: 1.5px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 0.6rem 0.9rem 0.2rem;
+  margin: 0.2rem 0 0.6rem;
+}
+fieldset.grupo legend { font-weight: 700; font-size: 0.95rem; padding: 0 0.35rem; color: var(--azul); }
+.grupo__campos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0 0.8rem;
+}
+select:disabled { background: #eef1f5; color: var(--texto-suave); }
+
+/* ===== Diseño responsivo =====
+   Base: celular (1 columna). Desde 640 px: 2 columnas.
+   Desde 1024 px (laptop): tarjeta algo más ancha.            */
+fieldset#campos { grid-template-columns: 1fr; }
+
+@media (min-width: 640px) {
+  fieldset#campos { grid-template-columns: 1fr 1fr; }
+  .formulario { padding: 1.75rem 1.75rem; }
+}
+
+@media (min-width: 1024px) {
+  .contenedor { max-width: 860px; padding-top: 2rem; }
+  .cabecera { padding: 2.5rem 1rem 2.25rem; }
+}
+
+/* Celulares muy angostos (320–360 px) */
+@media (max-width: 360px) {
+  .contenedor { padding: 0.75rem 0.6rem 1.5rem; }
+  .formulario { padding: 1rem 0.75rem; }
+  fieldset.grupo { padding: 0.5rem 0.6rem 0.1rem; }
+  .cabecera__institucion, .cabecera__curso { font-size: 0.85rem; }
+}
+
+/* Celular en horizontal: cabecera compacta */
+@media (max-height: 480px) and (orientation: landscape) {
+  .cabecera { padding: 0.9rem 1rem; }
+}

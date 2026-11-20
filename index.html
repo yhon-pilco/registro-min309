@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de estudiantes | Fundamentos de Programación</title>
+  <meta name="description" content="Formulario de registro de estudiantes del curso Fundamentos de Programación, UNA Puno.">
+  <meta name="theme-color" content="#0b3d6e">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header class="cabecera">
+    <p class="cabecera__institucion">Universidad Nacional del Altiplano · Puno</p>
+    <h1>Registro de estudiantes</h1>
+    <p class="cabecera__curso">Fundamentos de Programación · Semestre 2026-II</p>
+  </header>
+
+  <main class="contenedor">
+    <!-- Estado del registro: abierto, por iniciar o cerrado -->
+    <section id="estado" class="estado estado--cargando" aria-live="polite">
+      <p id="estado-texto">Consultando el estado del registro…</p>
+      <p id="estado-detalle" class="estado__detalle"></p>
+    </section>
+
+    <!-- Formulario -->
+    <form id="formulario" class="formulario" novalidate>
+      <fieldset id="campos" disabled>
+        <legend class="formulario__titulo">Datos personales</legend>
+        <p class="formulario__nota">Todos los campos son obligatorios.</p>
+
+        <div class="campo campo--ancho">
+          <label for="nombres">Nombres y apellidos</label>
+          <input type="text" id="nombres" name="nombres" autocomplete="name"
+                 maxlength="100" placeholder="Ej.: Juan Carlos Quispe Mamani" required>
+          <p class="campo__error" id="error-nombres"></p>
+        </div>
+
+        <div class="campo">
+          <label for="codigo">Código universitario</label>
+          <input type="text" id="codigo" name="codigo" inputmode="numeric" pattern="[0-9]{6}"
+                 maxlength="6" placeholder="6 dígitos, ej.: 215432" required>
+          <p class="campo__error" id="error-codigo"></p>
+        </div>
+
+        <div class="campo">
+          <label for="correo">Correo electrónico</label>
+          <input type="email" id="correo" name="correo" autocomplete="email"
+                 maxlength="100" placeholder="Ej.: jquispe@est.unap.edu.pe" required>
+          <p class="campo__error" id="error-correo"></p>
+        </div>
+
+        <div class="campo">
+          <label for="celular">Número de celular</label>
+          <input type="tel" id="celular" name="celular" inputmode="numeric" autocomplete="tel-national"
+                 pattern="9[0-9]{8}" maxlength="9" placeholder="9 dígitos, ej.: 951234567" required>
+          <p class="campo__error" id="error-celular"></p>
+        </div>
+
+        <div class="campo">
+          <label for="semestre">Semestre académico</label>
+          <select id="semestre" name="semestre" required>
+            <option value="">Seleccione…</option>
+            <option>I</option><option>II</option><option>III</option><option>IV</option>
+            <option>V</option><option>VI</option><option>VII</option><option>VIII</option>
+            <option>IX</option><option>X</option>
+          </select>
+          <p class="campo__error" id="error-semestre"></p>
+        </div>
+
+        <div class="campo campo--ancho">
+          <label for="area">Área de interés</label>
+          <select id="area" name="area" required>
+            <option value="">Seleccione…</option>
+            <option>Minería subterránea</option>
+            <option>Minería a tajo abierto</option>
+            <option>Geología y exploración</option>
+            <option>Procesamiento de minerales y metalurgia</option>
+            <option>Planeamiento y diseño de minas</option>
+            <option>Geomecánica</option>
+            <option>Perforación y voladura</option>
+            <option>Seguridad y salud ocupacional</option>
+            <option>Medio ambiente y gestión social</option>
+            <option>Costos, economía y comercialización</option>
+            <option>Programación y tecnología minera</option>
+            <option value="Otro">Otro (especificar)</option>
+          </select>
+          <input type="text" id="area-otro" name="areaOtro" maxlength="60"
+                 placeholder="Escriba su área de interés" hidden>
+          <p class="campo__error" id="error-area"></p>
+        </div>
+
+        <div class="campo">
+          <label for="fechaNac">Fecha de nacimiento</label>
+          <input type="date" id="fechaNac" name="fechaNac" autocomplete="bday" required>
+          <p class="campo__error" id="error-fechaNac"></p>
+        </div>
+
+        <div class="campo">
+          <label for="estadoCivil">Estado civil</label>
+          <select id="estadoCivil" name="estadoCivil" required>
+            <option value="">Seleccione…</option>
+            <option>Soltero(a)</option>
+            <option>Casado(a)</option>
+            <option>Conviviente</option>
+            <option>Divorciado(a)</option>
+            <option>Viudo(a)</option>
+          </select>
+          <p class="campo__error" id="error-estadoCivil"></p>
+        </div>
+
+        <fieldset class="grupo campo--ancho">
+          <legend>Lugar de nacimiento</legend>
+          <div class="grupo__campos">
+            <div class="campo">
+              <label for="region">Región</label>
+              <select id="region" name="region" required>
+                <option value="">Cargando…</option>
+              </select>
+              <p class="campo__error" id="error-region"></p>
+            </div>
+            <div class="campo">
+              <label for="provincia">Provincia</label>
+              <select id="provincia" name="provincia" required disabled>
+                <option value="">Elija primero la región</option>
+              </select>
+              <p class="campo__error" id="error-provincia"></p>
+            </div>
+            <div class="campo">
+              <label for="distrito">Distrito</label>
+              <select id="distrito" name="distrito" required disabled>
+                <option value="">Elija primero la provincia</option>
+              </select>
+              <p class="campo__error" id="error-distrito"></p>
+            </div>
+          </div>
+          <div class="campo" id="caja-pais" hidden>
+            <label for="pais">País de nacimiento</label>
+            <input type="text" id="pais" name="pais" maxlength="40" placeholder="Ej.: Bolivia">
+            <p class="campo__error" id="error-pais"></p>
+          </div>
+        </fieldset>
+
+        <div class="campo">
+          <label for="nacionalidad">Nacionalidad</label>
+          <input type="text" id="nacionalidad" name="nacionalidad" list="lista-nacionalidades" autocomplete="off"
+                 maxlength="40" value="Peruana" required>
+          <datalist id="lista-nacionalidades">
+            <option value="Peruana"><option value="Boliviana"><option value="Chilena">
+            <option value="Colombiana"><option value="Ecuatoriana"><option value="Venezolana">
+            <option value="Argentina"><option value="Brasileña">
+          </datalist>
+          <p class="campo__error" id="error-nacionalidad"></p>
+        </div>
+
+        <div class="campo campo--ancho campo--check">
+          <input type="checkbox" id="consentimiento" name="consentimiento" required>
+          <label for="consentimiento">
+            Autorizo el uso de mis datos personales únicamente para el registro académico
+            del curso, conforme a la Ley N.° 29733, Ley de Protección de Datos Personales.
+          </label>
+          <p class="campo__error" id="error-consentimiento"></p>
+        </div>
+
+        <!-- Campo trampa contra robots: las personas no lo ven -->
+        <div class="trampa" aria-hidden="true">
+          <label for="sitio">No llenar</label>
+          <input type="text" id="sitio" name="sitio" tabindex="-1" autocomplete="off">
+        </div>
+
+        <button type="submit" id="enviar" class="boton">Enviar registro</button>
+        <p id="mensaje" class="mensaje" role="alert"></p>
+      </fieldset>
+    </form>
+
+    <!-- Confirmación -->
+    <section id="exito" class="exito" hidden>
+      <h2>¡Registro enviado!</h2>
+      <p>Tu registro quedó guardado con el número <strong id="exito-numero"></strong>.</p>
+      <p class="exito__detalle" id="exito-detalle"></p>
+      <button type="button" id="otro" class="boton boton--secundario">Registrar a otra persona</button>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <p>Escuela Profesional de Ingeniería de Minas · UNA Puno · 2026</p>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
