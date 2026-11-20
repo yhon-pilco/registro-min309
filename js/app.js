@@ -136,7 +136,7 @@ function aplicarEstado(estado) {
         return;
       }
       mostrarEstado("abierto", `Registro abierto · cierra en ${tiempoRestante(falta)}`,
-        `Hasta el ${formatoFecha.format(fechaFin)}. ${total}`);
+        `Hasta el ${formatoFecha.format(fechaFin)} · ${total}`);
     };
     actualizar();
     temporizador = setInterval(actualizar, 1000);
