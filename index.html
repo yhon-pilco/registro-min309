@@ -13,8 +13,15 @@
     <p class="cabecera__institucion">Universidad Nacional del Altiplano · Puno</p>
     <h1>Registro de estudiantes</h1>
     <p class="cabecera__curso">Fundamentos de Programación · Semestre 2026-II</p>
+    <button type="button" class="boton-qr" data-abrir-qr aria-label="Mostrar el código QR de esta página">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+        <path fill="currentColor" d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm8-2h2v2h-2v-2zm2 2h2v2h-2v-2zm-2 2h2v2h-2v-2zm4 0h2v2h-2v-2zm2-4h2v2h-2v-2zm0 4h2v4h-4v-2h2v-2zm-4 2h2v2h-2v-2z"/>
+      </svg>
+      <span>Mostrar QR</span>
+    </button>
   </header>
 
+  <div class="disposicion">
   <main class="contenedor">
     <!-- Estado del registro: abierto, por iniciar o cerrado -->
     <section id="estado" class="estado estado--cargando" aria-live="polite">
@@ -177,9 +184,39 @@
       <h2>¡Registro enviado!</h2>
       <p>Tu registro quedó guardado con el número <strong id="exito-numero"></strong>.</p>
       <p class="exito__detalle" id="exito-detalle"></p>
-      <button type="button" id="otro" class="boton boton--secundario">Registrar a otra persona</button>
+      <div class="exito__compartir">
+        <p class="exito__invitacion">¿Un compañero aún no se registra? Muéstrale el QR o envíale el link.</p>
+        <button type="button" class="boton" data-abrir-qr>Mostrar QR a un compañero</button>
+        <button type="button" class="boton boton--secundario" id="compartir">Compartir link</button>
+        <p class="exito__aviso" id="aviso-compartir" role="status"></p>
+      </div>
+      <button type="button" id="otro" class="boton boton--enlace">Registrar a otra persona en este equipo</button>
     </section>
   </main>
+
+  <!-- QR fijo al costado en pantallas grandes (laptop / proyector) -->
+  <aside class="qr-lateral" aria-label="Código QR del registro">
+    <p class="qr-lateral__titulo">Escanea para registrarte</p>
+    <img src="img/qr-registro.svg" alt="Código QR que abre el formulario de registro" width="220" height="220">
+    <p class="qr-lateral__url">yhon-pilco.github.io/registro-min309</p>
+    <button type="button" class="boton boton--secundario" data-abrir-qr>Proyectar QR en grande</button>
+  </aside>
+  </div>
+
+  <!-- QR en grande: para la pizarra o para pasárselo a un compañero -->
+  <dialog id="dialogo-qr" class="dialogo-qr" aria-labelledby="qr-titulo">
+    <div class="dialogo-qr__contenido">
+      <p class="dialogo-qr__curso">Fundamentos de Programación · UNA Puno</p>
+      <h2 id="qr-titulo">Escanea y regístrate</h2>
+      <img src="img/qr-registro.svg" alt="Código QR que abre el formulario de registro" class="dialogo-qr__imagen">
+      <p class="dialogo-qr__url">yhon-pilco.github.io/registro-min309</p>
+      <p class="dialogo-qr__estado" id="qr-estado"></p>
+      <div class="dialogo-qr__botones">
+        <button type="button" class="boton boton--secundario" id="pantalla-completa">Pantalla completa</button>
+        <button type="button" class="boton" id="cerrar-qr">Cerrar</button>
+      </div>
+    </div>
+  </dialog>
 
   <footer class="pie">
     <p>Escuela Profesional de Ingeniería de Minas · UNA Puno · 2026</p>

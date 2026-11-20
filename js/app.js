@@ -348,6 +348,71 @@ $("otro").addEventListener("click", () => {
   consultarEstado();
 });
 
+// ---------- QR: proyectar en la pizarra o pasarlo a un compañero ----------
+const URL_PUBLICA = "https://yhon-pilco.github.io/registro-min309/";
+const dialogoQR = $("dialogo-qr");
+let refrescoQR = null;
+
+function actualizarEstadoQR() {
+  // copia en el diálogo el estado visible (cuenta regresiva y total)
+  $("qr-estado").textContent = cajaEstado.classList.contains("estado--abierto")
+    ? `${estadoTexto.textContent} · ${estadoDetalle.textContent.split("·").pop().trim()}`
+    : estadoTexto.textContent;
+}
+
+function abrirQR() {
+  if (typeof dialogoQR.showModal === "function") dialogoQR.showModal();
+  else dialogoQR.setAttribute("open", "");
+  actualizarEstadoQR();
+  clearInterval(refrescoQR);
+  let segundos = 0;
+  refrescoQR = setInterval(() => {
+    segundos += 1;
+    if (segundos % 30 === 0 && !MODO_DEMO) consultarEstado(); // total de registros en vivo
+    actualizarEstadoQR();
+  }, 1000);
+}
+
+function cerrarQR() {
+  clearInterval(refrescoQR);
+  if (document.fullscreenElement) document.exitFullscreen();
+  if (dialogoQR.open) dialogoQR.close();
+  if (new URLSearchParams(location.search).has("qr")) history.replaceState(null, "", location.pathname);
+}
+
+document.querySelectorAll("[data-abrir-qr]").forEach((b) => b.addEventListener("click", abrirQR));
+$("cerrar-qr").addEventListener("click", cerrarQR);
+dialogoQR.addEventListener("close", () => clearInterval(refrescoQR));
+dialogoQR.addEventListener("click", (e) => { if (e.target === dialogoQR) cerrarQR(); });
+
+$("pantalla-completa").addEventListener("click", () => {
+  if (dialogoQR.requestFullscreen) dialogoQR.requestFullscreen().catch(() => {});
+});
+if (!document.fullscreenEnabled) $("pantalla-completa").hidden = true;
+
+// Compartir el link (WhatsApp, Telegram, etc.) o copiarlo
+$("compartir").addEventListener("click", async () => {
+  const aviso = $("aviso-compartir");
+  const datos = {
+    title: "Registro de estudiantes",
+    text: "Regístrate en el formulario del curso Fundamentos de Programación:",
+    url: URL_PUBLICA
+  };
+  try {
+    if (navigator.share) {
+      await navigator.share(datos);
+      aviso.textContent = "";
+    } else {
+      await navigator.clipboard.writeText(URL_PUBLICA);
+      aviso.textContent = "Link copiado. Pégalo en WhatsApp o donde quieras.";
+    }
+  } catch (error) {
+    if (error.name !== "AbortError") aviso.textContent = `Copia este link: ${URL_PUBLICA}`;
+  }
+});
+
 // ---------- Inicio ----------
 cargarUbigeo();
 consultarEstado();
+// ?qr en la dirección abre directamente el QR en grande (útil para proyectar)
+if (new URLSearchParams(location.search).has("qr")) abrirQR();

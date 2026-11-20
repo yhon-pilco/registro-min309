@@ -159,6 +159,129 @@ input:focus, select:focus {
 /* ===== Pie ===== */
 .pie { text-align: center; color: var(--texto-suave); font-size: 0.85rem; padding: 1rem; }
 
+/* ===== Botón "Mostrar QR" de la cabecera ===== */
+.cabecera { position: relative; }
+.boton-qr {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.9rem;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--azul);
+  background: var(--blanco);
+  border: 0;
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  min-height: 44px;
+  cursor: pointer;
+}
+.boton-qr:hover { background: #fdf6dd; }
+.boton-qr:focus-visible { outline: 3px solid var(--dorado); outline-offset: 2px; }
+
+/* ===== Disposición general (formulario + QR lateral) ===== */
+.qr-lateral { display: none; }
+
+@media (min-width: 1100px) {
+  .disposicion {
+    display: grid;
+    grid-template-columns: minmax(0, 820px) 280px;
+    justify-content: center;
+    gap: 1.75rem;
+    padding: 0 1.25rem;
+  }
+  .disposicion .contenedor { max-width: none; margin: 0; padding-left: 0; padding-right: 0; }
+  .qr-lateral {
+    display: block;
+    position: sticky;
+    top: 1.25rem;
+    align-self: start;
+    margin-top: 2rem;
+    background: var(--blanco);
+    border-radius: var(--radio);
+    box-shadow: var(--sombra);
+    border-top: 5px solid var(--dorado);
+    padding: 1.25rem;
+    text-align: center;
+  }
+  .qr-lateral img { width: 100%; height: auto; display: block; }
+  .qr-lateral__titulo { margin: 0 0 0.75rem; font-weight: 700; font-size: 1.1rem; color: var(--azul); }
+  .qr-lateral__url { margin: 0.5rem 0 0.25rem; font-size: 0.85rem; color: var(--texto-suave); word-break: break-all; }
+  .qr-lateral .boton { width: 100%; font-size: 0.95rem; }
+  /* en laptop el botón de la cabecera se ubica arriba a la derecha */
+  .boton-qr { position: absolute; top: 1.25rem; right: 1.5rem; margin: 0; }
+}
+
+/* ===== Confirmación: compartir con un compañero ===== */
+.exito__compartir {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 1.25rem 0 0.5rem;
+  padding: 1rem;
+  background: var(--azul-claro);
+  border-radius: var(--radio);
+}
+.exito__compartir .boton { margin-top: 0; }
+.exito__invitacion { margin: 0; font-weight: 600; color: var(--azul); }
+.exito__aviso { margin: 0; min-height: 1.2em; font-size: 0.9rem; color: var(--verde); font-weight: 600; }
+.boton--enlace {
+  background: none;
+  color: var(--azul);
+  text-decoration: underline;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.boton--enlace:hover:not(:disabled) { background: none; color: #082d52; }
+
+/* ===== Diálogo con el QR en grande ===== */
+.dialogo-qr {
+  border: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  background: var(--blanco);
+  color: var(--texto);
+}
+.dialogo-qr::backdrop { background: rgba(11, 61, 110, 0.6); }
+.dialogo-qr__contenido {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 1rem;
+  text-align: center;
+  border-top: 8px solid var(--dorado);
+}
+.dialogo-qr__curso { margin: 0; color: var(--texto-suave); font-size: clamp(0.9rem, 2vw, 1.3rem); }
+.dialogo-qr h2 { margin: 0 0 0.4rem; color: var(--azul); font-size: clamp(1.6rem, 5vw, 3.2rem); }
+.dialogo-qr__imagen {
+  width: min(55vh, 86vw);
+  height: auto;
+  aspect-ratio: 1;
+  image-rendering: pixelated;
+}
+.dialogo-qr__url {
+  margin: 0.3rem 0 0;
+  font-weight: 700;
+  color: var(--azul);
+  font-size: clamp(1rem, 3vw, 2rem);
+  word-break: break-all;
+}
+.dialogo-qr__estado { margin: 0; color: var(--verde); font-weight: 600; font-size: clamp(0.9rem, 2vw, 1.4rem); min-height: 1.4em; }
+.dialogo-qr__botones { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem; }
+.dialogo-qr__botones .boton { margin-top: 0; min-width: 150px; }
+/* en pantalla completa (proyector) se ocultan los botones */
+.dialogo-qr:fullscreen .dialogo-qr__botones { display: none; }
+.dialogo-qr:fullscreen .dialogo-qr__imagen { width: min(70vh, 86vw); }
+
 /* ===== Grupo "Lugar de nacimiento" ===== */
 fieldset.grupo {
   display: block;
